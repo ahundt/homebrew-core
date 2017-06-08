@@ -12,11 +12,14 @@ class Glog < Formula
     sha256 "ccb8f5022bffec4a768851feb5a8cc1bf52ee7d9b8b87b8f9ce6bc4cd28278f9" => :yosemite
   end
 
+  depends_on "cmake" => :build
   depends_on "gflags"
 
   def install
-    system "./configure", "--disable-dependency-tracking",
-                          "--prefix=#{prefix}"
-    system "make", "install"
+    mkdir "glog-build" do
+      args = std_cmake_args
+      system "cmake", *args
+      system "make", "install"
+    end
   end
 end
